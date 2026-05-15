@@ -2,7 +2,7 @@
   "name": "PGN Study - Chess Opening Trainer",
   "short_name": "PGN Study",
   "description": "Estudia aperturas de ajedrez con audio",
-  "start_url": "/",
+  "start_url": "/pgn-study/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0066cc",

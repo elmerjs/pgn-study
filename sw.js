@@ -1,6 +1,6 @@
 const CACHE_NAME = 'pgn-study-v1';
 const urlsToCache = [
-  '/',
+  '/pgn-study/',
   '/index.html',
   '/styles.css',
   '/script.js',
