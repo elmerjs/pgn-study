@@ -157,7 +157,11 @@ function init() {
   bindSleepTimer();
   restoreLastEpisode();
   updateContinueBanner();
-  updateGlobalProgress();
+  
+  // Pequeño retraso para asegurar que localStorage y episodios estén listos
+  setTimeout(() => {
+    updateGlobalProgress();
+  }, 100);
 }
 
 function filtrarEpisodios() {
@@ -176,7 +180,11 @@ function getBadgeClass(eje) {
 }
 
 function getProgress(epId) {
-  return progressData[epId] || { currentTime: 0, duration: 0, percent: 0, completed: false };
+  const saved = progressData[epId];
+  if (!saved) {
+    return { currentTime: 0, duration: 0, percent: 0, completed: false };
+  }
+  return saved;
 }
 
 function formatTime(sec) {
@@ -367,9 +375,26 @@ function updateContinueBanner() {
 }
 
 function updateGlobalProgress() {
+  if (!episodes || episodes.length === 0) {
+    console.warn("Episodios no cargados aún");
+    return;
+  }
+  
   const total = episodes.length;
-  const completed = episodes.filter(ep => getProgress(ep.id).completed).length;
-
+  let completed = 0;
+  
+  // Calcular completados correctamente
+  for (let i = 0; i < total; i++) {
+    const ep = episodes[i];
+    const progress = getProgress(ep.id);
+    // Un audio se considera completado si tiene más del 95% escuchado O está marcado como completado
+    if (progress.completed === true || (progress.percent && progress.percent >= 95)) {
+      completed++;
+    }
+  }
+  
+  console.log(`📊 Progreso: ${completed}/${total} completados`); // Para depuración
+  
   if (progressCountEl) {
     progressCountEl.textContent = `${completed}/${total} audios completados`;
   }
