@@ -29,7 +29,7 @@ const episodes = [
     ejeNombre: "⚙️ Estructura del Estado y PGN",
     icon: "⚙️",
     subtitulo: "Las cuatro funciones macro",
-    duracion: "0:00",
+    duracion: "27:51",
     foco: "Preventiva, Disciplinaria, Intervención y DD.HH."
   },
   {
@@ -40,7 +40,7 @@ const episodes = [
     ejeNombre: "⚙️ Estructura del Estado y PGN",
     icon: "⚙️",
     subtitulo: "Los tres ejes de competencia",
-    duracion: "0:00",
+    duracion: "19:09",
     foco: "Vertical, Horizontal y Territorial para asignación de quejas"
   },
   {
@@ -51,7 +51,7 @@ const episodes = [
     ejeNombre: "📋 Derecho Administrativo (CPACA)",
     icon: "📋",
     subtitulo: "Artículo 3 de la Ley 1437",
-    duracion: "0:00",
+    duracion: "29:14",
     foco: "Celeridad, Eficacia e Imparcialidad"
   },
   {
@@ -62,7 +62,7 @@ const episodes = [
     ejeNombre: "💰 Temas Funcionales Especializados",
     icon: "💰",
     subtitulo: "Ley 80 y 1150 | Contratación Estatal",
-    duracion: "0:00",
+    duracion: "17:04",
     foco: "Transparencia en planeación y Contratos de Prestación de Servicios"
   },
   {
@@ -95,7 +95,7 @@ const episodes = [
     ejeNombre: "🎯 Estrategia de Prueba",
     icon: "🎯",
     subtitulo: "Evitar la 'trampa de la operatividad'",
-    duracion: "0:00",
+    duracion: "18:31",
     foco: "Estrategia para preguntas de comportamiento"
   }
 ];
