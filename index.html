@@ -2,47 +2,44 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#0f0f1a" />
-    
-    
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icon-192.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="PGN Study">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    
-  <title>PGN Study — Procuraduría</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PGN Study</title>
+
+  <!-- Manifest PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0b1020" />
+
+  <!-- Iconos -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- Estilos -->
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
-
-  <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
-
+<body class="dark-theme">
   <div class="app-container">
+
     <header class="header">
-      <div class="header-logo">
-        <div class="logo-icon">⚖️</div>
+      <div class="app-brand">
+        <div class="app-icon">⚖️</div>
         <div>
-          <h1>PGN Study</h1>
-          <p>Procuraduría General de la Nación</p>
+          <h1 class="app-title">PGN Study</h1>
+          <p class="app-subtitle">Procuraduría General de la Nación</p>
         </div>
       </div>
 
-      <div id="studyStats" class="study-stats">
-        <span id="progressCount">0/9 audios</span>
-        <div class="stats-bar">
-          <div id="statsBarFill" class="stats-bar-fill"></div>
+      <div class="header-actions">
+        <button id="themeToggle" class="icon-btn" aria-label="Cambiar tema">🌙</button>
+        <div class="progress-summary">
+          <span id="completedCount">0</span>/<span id="totalCount">0</span> audios completados
+          <div class="progress-bar-header">
+            <div id="headerProgressFill" class="header-progress-fill"></div>
+          </div>
         </div>
       </div>
     </header>
 
+    <!-- Banner continuar escuchando -->
     <section id="continueBanner" class="continue-banner hidden" aria-label="Continuar escuchando">
       <div class="continue-icon">▶️</div>
       <div class="continue-info">
@@ -52,17 +49,23 @@
       <button id="continueBtn" class="continue-play-btn" aria-label="Continuar reproducción">▶</button>
     </section>
 
-    <nav class="tabs" role="tablist" aria-label="Filtrar por eje temático">
-      <button class="tab-btn active" data-eje="all" role="tab" aria-selected="true">🎓 Todos</button>
-      <button class="tab-btn" data-eje="constitucion" role="tab" aria-selected="false">🏛️ Constitución</button>
-      <button class="tab-btn" data-eje="estructura" role="tab" aria-selected="false">⚙️ Estructura</button>
-      <button class="tab-btn" data-eje="administrativo" role="tab" aria-selected="false">📋 CPACA</button>
-      <button class="tab-btn" data-eje="funcional" role="tab" aria-selected="false">💰 Funcional</button>
-      <button class="tab-btn" data-eje="estrategia" role="tab" aria-selected="false">🎯 Estrategia</button>
-    </nav>
+    <!-- Barra de tabs + flecha -->
+    <div class="tabs-bar">
+      <button class="collapse-btn" aria-label="Mostrar u ocultar filtros">◀</button>
+      <div class="tabs">
+        <button class="tab-btn active" data-eje="all" role="tab" aria-selected="true">🎓 Todos</button>
+        <button class="tab-btn" data-eje="constitucion" role="tab" aria-selected="false">🏛️ Constitución</button>
+        <button class="tab-btn" data-eje="estructura" role="tab" aria-selected="false">⚙️ Estructura</button>
+        <button class="tab-btn" data-eje="administrativo" role="tab" aria-selected="false">📋 CPACA</button>
+        <button class="tab-btn" data-eje="funcional" role="tab" aria-selected="false">💰 Funcional</button>
+        <button class="tab-btn" data-eje="estrategia" role="tab" aria-selected="false">🎯 Estrategia</button>
+      </div>
+    </div>
 
+    <!-- Lista de episodios -->
     <main id="episodesList" class="episodes-list" aria-label="Lista de episodios"></main>
 
+    <!-- Reproductor principal -->
     <section id="player" class="player hidden" aria-label="Reproductor de audio">
       <div class="player-header">
         <div class="player-eje-badge" id="playerEjeBadge"></div>
@@ -90,7 +93,15 @@
           <span id="currentTime">0:00</span>
           <span id="duration">0:00</span>
         </div>
-        <input type="range" id="progressBar" class="progress-bar" min="0" max="100" value="0" aria-label="Progreso del audio" />
+        <input
+          type="range"
+          id="progressBar"
+          class="progress-bar"
+          min="0"
+          max="100"
+          value="0"
+          aria-label="Progreso del audio"
+        />
       </div>
 
       <div class="player-options">
@@ -117,6 +128,7 @@
       </div>
     </section>
 
+    <!-- Mini player -->
     <div id="miniPlayer" class="mini-player hidden" role="region" aria-label="Mini reproductor">
       <div id="miniArtwork" class="mini-artwork">🎙️</div>
       <div class="mini-info">
@@ -128,8 +140,10 @@
       <button id="miniPlayBtn" class="mini-play-btn" aria-label="Play/Pausa mini">▶</button>
       <button id="miniExpandBtn" class="mini-expand-btn" aria-label="Expandir reproductor">∧</button>
     </div>
-  </div>
 
+  </div> <!-- cierre .app-container -->
+
+  <!-- Modal Sleep Timer -->
   <div id="sleepModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Temporizador">
     <div class="modal-box">
       <h3>⏱ Sleep Timer</h3>
@@ -143,17 +157,20 @@
     </div>
   </div>
 
+  <!-- Audio real -->
   <audio id="audioPlayer" preload="metadata"></audio>
+
+  <!-- Lógica principal -->
   <script src="script.js"></script>
-    
-       <!-- Registrar Service Worker -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log('Service Worker registrado'))
-                .catch(err => console.log('Error:', err));
-        }
-    </script>
-    
+
+  <!-- Registrar Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => console.log("Service Worker registrado"))
+        .catch(err => console.log("Error:", err));
+    }
+  </script>
 </body>
 </html>

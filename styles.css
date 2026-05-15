@@ -860,17 +860,35 @@ input:focus-visible {
     scroll-behavior: auto !important;
   }
 }
-/* Mejoras solo para escritorio */
+
+/* Ajuste solo para pantallas grandes (PC) */
 @media (min-width: 1024px) {
+
+  .tabs-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 18px;
+  }
+
+  .collapse-btn {
+    flex-shrink: 0;
+  }
+
   .tabs {
+    flex: 1;
+    display: flex;
+    gap: 10px;
     overflow-x: auto;
-    /* deja ver la barra en escritorio para que el usuario note el scroll */
+    padding-bottom: 8px;
+    margin-bottom: 0;
     scrollbar-width: thin;
   }
 
   .tabs::-webkit-scrollbar {
     height: 6px;
-    display: block; /* en escritorio sí se muestra */
+    display: block;
   }
 
   .tabs::-webkit-scrollbar-track {
@@ -878,11 +896,16 @@ input:focus-visible {
   }
 
   .tabs::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.22);
     border-radius: 999px;
   }
 
   body.light-theme .tabs::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  /* Opcional: un poco más de ancho máximo en escritorio */
+  .app-container {
+    max-width: 1100px;
   }
 }
