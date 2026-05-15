@@ -296,6 +296,7 @@ function playAudio() {
   audioEl.play()
     .then(() => {
       isPlaying = true;
+      // Ícono de pausa cuando suena
       playPauseBtn.textContent = "❚❚";
       miniPlayBtn.textContent = "❚❚";
       document.body.classList.add("is-playing");
@@ -308,11 +309,11 @@ function playAudio() {
 function pauseAudio(updateState = true) {
   audioEl.pause();
   if (updateState) isPlaying = false;
-  playPauseBtn.textContent = "▶";
-  miniPlayBtn.textContent = "▶";
+  // Ícono de micrófono cuando está detenido / listo para reproducir
+  playPauseBtn.textContent = "🎙️";
+  miniPlayBtn.textContent = "🎙️";
   document.body.classList.remove("is-playing");
 }
-
 function togglePlayPause() {
   if (!audioEl.src && episodes.length) {
     loadEpisode(episodes[0], true, false);
