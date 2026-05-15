@@ -367,10 +367,17 @@ function updateContinueBanner() {
 }
 
 function updateGlobalProgress() {
-  const completed = Object.values(progressData).filter(item => item.completed).length;
-  const percent = (completed / episodes.length) * 100;
-  progressCountEl.textContent = `${completed}/${episodes.length} audios completados`;
-  statsBarFillEl.style.width = `${percent}%`;
+  const total = episodes.length;
+  const completed = episodes.filter(ep => getProgress(ep.id).completed).length;
+
+  if (progressCountEl) {
+    progressCountEl.textContent = `${completed}/${total} audios completados`;
+  }
+
+  if (statsBarFillEl) {
+    const percent = total ? (completed / total) * 100 : 0;
+    statsBarFillEl.style.width = `${percent}%`;
+  }
 }
 
 function bindTabs() {
