@@ -52,14 +52,18 @@
       <button id="continueBtn" class="continue-play-btn" aria-label="Continuar reproducción">▶</button>
     </section>
 
-    <nav class="tabs" role="tablist" aria-label="Filtrar por eje temático">
-      <button class="tab-btn active" data-eje="all" role="tab" aria-selected="true">🎓 Todos</button>
-      <button class="tab-btn" data-eje="constitucion" role="tab" aria-selected="false">🏛️ Constitución</button>
-      <button class="tab-btn" data-eje="estructura" role="tab" aria-selected="false">⚙️ Estructura</button>
-      <button class="tab-btn" data-eje="administrativo" role="tab" aria-selected="false">📋 CPACA</button>
-      <button class="tab-btn" data-eje="funcional" role="tab" aria-selected="false">💰 Funcional</button>
-      <button class="tab-btn" data-eje="estrategia" role="tab" aria-selected="false">🎯 Estrategia</button>
-    </nav>
+    <div class="tabs-wrapper">
+      <button class="scroll-arrow left" id="scrollLeftBtn" aria-label="Desplazar izquierda">◀</button>
+      <nav class="tabs" role="tablist" aria-label="Filtrar por eje temático" id="tabsContainer">
+        <button class="tab-btn active" data-eje="all" role="tab" aria-selected="true">🎓 Todos</button>
+        <button class="tab-btn" data-eje="constitucion" role="tab" aria-selected="false">🏛️ Constitución</button>
+        <button class="tab-btn" data-eje="estructura" role="tab" aria-selected="false">⚙️ Estructura</button>
+        <button class="tab-btn" data-eje="administrativo" role="tab" aria-selected="false">📋 CPACA</button>
+        <button class="tab-btn" data-eje="funcional" role="tab" aria-selected="false">💰 Funcional</button>
+        <button class="tab-btn" data-eje="estrategia" role="tab" aria-selected="false">🎯 Estrategia</button>
+      </nav>
+      <button class="scroll-arrow right" id="scrollRightBtn" aria-label="Desplazar derecha">▶</button>
+    </div>
 
     <main id="episodesList" class="episodes-list" aria-label="Lista de episodios"></main>
 
