@@ -551,23 +551,18 @@ function initProBanner() {
   const close  = document.getElementById("proCloseBtn");
   if (!banner || !btn) return;
 
-  // Reemplaza por tu número real
-  const WHATSAPP = "573XXXXXXXXX";
+  // Tu configuración de WhatsApp
+  const WHATSAPP = "573XXXXXXXXX"; // Coloca tu número real aquí
   const msg = encodeURIComponent(
-    "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
-    "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
+    "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // Mostrar banner solo una vez por sesión, con delay
-  const shown = sessionStorage.getItem("pro-banner-shown");
-  
-  if (!shown) {
-    setTimeout(() => {
-      banner.classList.remove("pro-banner--hidden");
-      sessionStorage.setItem("pro-banner-shown", "1");
-    }, 3000); // 3 segundos para probar rápido
-  }
+  // CORRECCIÓN CELULARES: Eliminamos sessionStorage temporalmente para forzar que aparezca siempre
+  setTimeout(() => {
+    console.log("Lanzando banner PRO...");
+    banner.classList.remove("pro-banner--hidden");
+  }, 3000); // 3 segundos exactos después de cargar
 
   if (close) {
     close.addEventListener("click", () => {
