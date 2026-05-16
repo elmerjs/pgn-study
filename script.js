@@ -562,7 +562,7 @@ function initProBanner() {
     setTimeout(() => {
       banner.classList.remove("pro-banner--hidden");
       sessionStorage.setItem("pro-banner-shown", "1");
-    }, 45000); // 45 segundos; pon 5000 para probar rápido
+    }, 3000); // 45 segundos; pon 5000 para probar rápido
   }
 
   if (close) {

@@ -1,4 +1,5 @@
-const CACHE_NAME = 'pgn-study-v1';
+/*const CACHE_NAME = 'pgn-study-v1';*/
+const CACHE_NAME = 'pgn-study-v2';  // etiqueta nueva → el navegador detecta el cambio
 const urlsToCache = [
   '/pgn-study/',
   '/index.html',
