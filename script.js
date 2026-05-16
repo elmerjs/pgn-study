@@ -22,28 +22,6 @@ const episodes = [
     foco: "Misión de guarda del interés público"
   },
   {
-    id: 3,
-    title: "Día 3 - La maquinaria de la Procuraduría colombiana",
-    file: "audios/dia 3 La_maquinaria_de_la_Procuraduría_colombiana (1).m4a",
-    eje: "estructura",
-    ejeNombre: "⚙️ Estructura del Estado y PGN",
-    icon: "⚙️",
-    subtitulo: "Las cuatro funciones macro",
-    duracion: "27:51",
-    foco: "Preventiva, Disciplinaria, Intervención y DD.HH."
-  },
-  {
-    id: 4,
-    title: "Día 4 - Estructura PGN: El triaje legal",
-    file: "audios/dia 4 estructura pgn - El_triaje_legal_de_la_Procuraduría (1).m4a",
-    eje: "estructura",
-    ejeNombre: "⚙️ Estructura del Estado y PGN",
-    icon: "⚙️",
-    subtitulo: "Los tres ejes de competencia",
-    duracion: "19:09",
-    foco: "Vertical, Horizontal y Territorial para asignación de quejas"
-  },
-  {
     id: 5,
     title: "Radiografía del sistema operativo del Estado colombiano",
     file: "audios/Radiografía_del_sistema_operativo_del_Estado_colombiano (1).m4a",
@@ -53,17 +31,6 @@ const episodes = [
     subtitulo: "Artículo 3 de la Ley 1437",
     duracion: "29:14",
     foco: "Celeridad, Eficacia e Imparcialidad"
-  },
-  {
-    id: 6,
-    title: "Cómo evitar un hallazgo fiscal",
-    file: "audios/Cómo_evitar_un_hallazgo_fiscal (1).m4a",
-    eje: "funcional",
-    ejeNombre: "💰 Temas Funcionales Especializados",
-    icon: "💰",
-    subtitulo: "Ley 80 y 1150 | Contratación Estatal",
-    duracion: "17:04",
-    foco: "Transparencia en planeación y Contratos de Prestación de Servicios"
   },
   {
     id: 7,
@@ -86,17 +53,6 @@ const episodes = [
     subtitulo: "Componente psicométrico",
     duracion: "25:32",
     foco: "Preguntas de 'Suma 3' | Nivel A vs Nivel B"
-  },
-  {
-    id: 9,
-    title: "Estrategia psicométrica para el examen PGN",
-    file: "audios/Estrategia_psicométrica_para_el_examen_PGN.m4a",
-    eje: "estrategia",
-    ejeNombre: "🎯 Estrategia de Prueba",
-    icon: "🎯",
-    subtitulo: "Evitar la 'trampa de la operatividad'",
-    duracion: "18:31",
-    foco: "Estrategia para preguntas de comportamiento"
   }
 ];
 
@@ -162,6 +118,7 @@ function init() {
   setTimeout(() => {
     updateGlobalProgress();
   }, 100);
+  initProBanner();
 }
 
 function filtrarEpisodios() {
@@ -584,4 +541,36 @@ function applySavedTheme() {
   });
 }
 
+/* ← AQUI PEGAS LA FUNCIÓN NUEVA */
+function initProBanner() {
+  const banner = document.getElementById("proBanner");
+  const btn    = document.getElementById("proWhatsAppBtn");
+  const close  = document.getElementById("proCloseBtn");
+  if (!banner || !btn) return;
+
+  // Reemplaza por tu número real
+  const WHATSAPP = "573XXXXXXXXX";
+  const msg = encodeURIComponent(
+    "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
+    "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
+  );
+  btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
+
+  // Mostrar banner solo una vez por sesión, con delay
+  const shown = sessionStorage.getItem("pro-banner-shown");
+  if (!shown) {
+    setTimeout(() => {
+      banner.classList.remove("pro-banner--hidden");
+      sessionStorage.setItem("pro-banner-shown", "1");
+    }, 45000); // 45 segundos; pon 5000 para probar rápido
+  }
+
+  if (close) {
+    close.addEventListener("click", () => {
+      banner.classList.add("pro-banner--hidden");
+    });
+  }
+}
+
+/* Y dejas el init al final como ya lo tienes */
 init();
