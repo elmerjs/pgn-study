@@ -172,19 +172,46 @@
         .catch(err => console.log("Error:", err));
     }
   </script>
-<!-- ── BANNER PRO ──────────────────────────────────────── -->
-<div id="proBanner" class="pro-banner pro-banner--hidden" role="complementary" aria-label="Versión PRO">
-  <div class="pro-banner__body">
-    <span class="pro-banner__icon">⭐</span>
-    <div class="pro-banner__text">
-      <strong>¿Tienes cargo específico?</strong>
-      <span>+13 audios de Funcionales y Comportamentales para tu perfil</span>
-    </div>
-    <a id="proWhatsAppBtn" class="pro-banner__cta" href="#" target="_blank" rel="noopener noreferrer">
-      Ver PRO
-    </a>
-  </div>
-  <button id="proCloseBtn" class="pro-banner__close" aria-label="Cerrar">✕</button>
+<!-- Banner PRO alternativo (simple) -->
+<div id="proBannerSimple" class="pro-banner-simple" style="display: none;">
+  <span>⭐</span>
+  <span>¿Necesitas contenido para tu perfil específico?</span>
+  <a href="https://wa.me/573001234567?text=Hola%2C%20quiero%20info%20del%20contenido%20PRO%20de%20PGN%20Study" target="_blank">Consultar PRO →</a>
 </div>
+
+<style>
+.pro-banner-simple {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: #1a1a2e;
+  border: 1px solid #e6a817;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  z-index: 200;
+  flex-wrap: wrap;
+}
+.pro-banner-simple a {
+  background: #e6a817;
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+
+<script>
+// Mostrar banner simple después de 5 segundos
+setTimeout(() => {
+  const banner = document.getElementById('proBannerSimple');
+  if (banner) banner.style.display = 'flex';
+}, 5000);
+</script>
 </body>
 </html>
