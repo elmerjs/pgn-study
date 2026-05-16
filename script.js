@@ -104,6 +104,10 @@ const cancelSleepBtn = document.getElementById("cancelSleep");
 const waveBarsEl = document.getElementById("waveBars");
 
 function init() {
+  // 1. Cargamos el banner PRO de inmediato para asegurar su ejecución
+  initProBanner(); 
+  
+  // 2. Ejecutamos el resto de la app
   renderWaveBars();
   applySavedTheme();
   renderizarLista();
@@ -118,7 +122,6 @@ function init() {
   setTimeout(() => {
     updateGlobalProgress();
   }, 100);
-  initProBanner();
 }
 
 function filtrarEpisodios() {
@@ -546,46 +549,31 @@ function initProBanner() {
   const banner = document.getElementById("proBanner");
   const btn    = document.getElementById("proWhatsAppBtn");
   const close  = document.getElementById("proCloseBtn");
-  
-  if (!banner || !btn) {
-    console.warn("No se encontró el banner PRO");
-    return;
-  }
+  if (!banner || !btn) return;
 
-  // ⚠️ CAMBIA ESTE NÚMERO POR TU NÚMERO REAL DE WHATSAPP
-  // Formato: código país + número sin espacios ni símbolos
-  // Ejemplo Colombia: 573001234567
-  const WHATSAPP = "573001234567";  // ← CAMBIA AQUÍ
-  
+  // Reemplaza por tu número real
+  const WHATSAPP = "573XXXXXXXXX";
   const msg = encodeURIComponent(
-    "Hola, vi la app PGN Study y quiero información sobre el contenido PRO " +
-    "personalizado para mi perfil en la Procuraduría. ¿Qué incluye y cómo accedo?"
+    "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
+    "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // CERRAR BANNER manualmente
+  // Mostrar banner solo una vez por sesión, con delay
+  const shown = sessionStorage.getItem("pro-banner-shown");
+  
+  if (!shown) {
+    setTimeout(() => {
+      banner.classList.remove("pro-banner--hidden");
+      sessionStorage.setItem("pro-banner-shown", "1");
+    }, 3000); // 3 segundos para probar rápido
+  }
+
   if (close) {
     close.addEventListener("click", () => {
       banner.classList.add("pro-banner--hidden");
-      // Guardar en localStorage para que NO vuelva a aparecer NUNCA si cierra
-      localStorage.setItem("pro-banner-closed", "true");
     });
-  }
-
-  // MOSTRAR BANNER
-  // Usamos localStorage en lugar de sessionStorage para controlarlo mejor
-  const wasClosed = localStorage.getItem("pro-banner-closed") === "true";
-  
-  if (!wasClosed) {
-    // Mostrar después de 5 segundos (ajústalo a 5000 o el tiempo que quieras)
-    setTimeout(() => {
-      banner.classList.remove("pro-banner--hidden");
-      console.log("✅ Banner PRO visible");
-    }, 5000);
-  } else {
-    console.log("ℹ️ Banner PRO oculto porque el usuario lo cerró");
   }
 }
 
-/* Y dejas el init al final como ya lo tienes */
 init();

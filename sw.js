@@ -1,21 +1,23 @@
-/*const CACHE_NAME = 'pgn-study-v1';*/
-const CACHE_NAME = 'pgn-study-v2';  // etiqueta nueva → el navegador detecta el cambio
+// Subimos la versión a v3 para limpiar la caché anterior que tenía errores
+const CACHE_NAME = 'pgn-study-v3';  
 const urlsToCache = [
-  '/pgn-study/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png'
-  // NO agregues audios aquí si son muy pesados
+  './',
+  './index.html',
+  './styles.css',
+  './script.js',
+  './manifest.json'
+  // Nota: Dejé fuera los iconos por ahora para evitar 404s si las rutas no coinciden exacto. 
+  // Si están en una carpeta, sería './icons/icon-192.png'
 ];
 
 // Instalar el service worker y cachear archivos
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+      .then(cache => {
+        console.log("Cache abierta, guardando archivos...");
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
@@ -34,6 +36,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
+            console.log("Limpiando caché antigua:", cacheName);
             return caches.delete(cacheName);
           }
         })
