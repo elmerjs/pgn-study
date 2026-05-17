@@ -551,20 +551,31 @@ function initProBanner() {
   const close  = document.getElementById("proCloseBtn");
   if (!banner || !btn) return;
 
-  const WHATSAPP = "573XXXXXXXXX";
+  const WHATSAPP = "573003468482";
   const msg = encodeURIComponent(
     "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
     "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // El CSS ya lo oculta (opacity:0, visibility:hidden)
-  // Solo manejamos cuándo mostrarlo y ocultarlo
+  // Mostrar al primer scroll del usuario
+  let shown = false;
+  window.addEventListener('scroll', () => {
+    if (!shown && window.scrollY > 100) {
+      shown = true;
+      banner.style.opacity    = "1";
+      banner.style.visibility = "visible";
+    }
+  }, { once: false });
 
+  // También mostrar después de 10 segundos por si no hace scroll
   setTimeout(() => {
-    banner.style.opacity    = "1";
-    banner.style.visibility = "visible";
-  }, 5000); // 5 segundos para probar, luego cambia a 45000
+    if (!shown) {
+      shown = true;
+      banner.style.opacity    = "1";
+      banner.style.visibility = "visible";
+    }
+  }, 10000);
 
   if (close) {
     close.addEventListener("click", () => {
