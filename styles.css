@@ -930,12 +930,6 @@ input:focus-visible {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.pro-banner--hidden {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  /* SIN display:none */
-}
 
 .pro-banner__body {
   display: flex;
