@@ -1,3 +1,5 @@
+// pgn-study v2.0 - banner PRO fix
+
 const episodes = [
   {
     id: 1,
