@@ -557,7 +557,8 @@ function initProBanner() {
     "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
     "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
   );
-  btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
+  const TELEGRAM = "tu_usuario_telegram"; // sin el @
+  btn.href = `https://t.me/pgnstudy`;
 
   banner.style.opacity    = "0";
   banner.style.visibility = "hidden";
