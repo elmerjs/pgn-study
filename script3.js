@@ -122,7 +122,7 @@ function init() {
   setTimeout(() => {
     updateGlobalProgress();
   }, 100);
-  initProBanner(); 
+    setTimeout(initProBanner, 1000);
 }
 
 function filtrarEpisodios() {
