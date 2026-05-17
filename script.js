@@ -558,20 +558,19 @@ function initProBanner() {
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // Ocultar ANTES del primer frame
-  banner.style.cssText += '; opacity:0 !important; visibility:hidden !important; transition: opacity 0.5s ease, visibility 0.5s ease;';
+  // El CSS ya lo oculta (opacity:0, visibility:hidden)
+  // Solo manejamos cuándo mostrarlo y ocultarlo
 
-  // Mostrar después de 45 segundos
   setTimeout(() => {
     banner.style.opacity    = "1";
     banner.style.visibility = "visible";
-  }, 45000); // cambia a 5000 para probar
+  }, 5000); // 5 segundos para probar, luego cambia a 45000
 
-  // Cerrar con X
   if (close) {
-    close.onclick = () => {
-      banner.style.cssText += '; opacity:0 !important; visibility:hidden !important; pointer-events:none !important;';
-    };
+    close.addEventListener("click", () => {
+      banner.style.opacity    = "0";
+      banner.style.visibility = "hidden";
+    });
   }
 }
 init();
