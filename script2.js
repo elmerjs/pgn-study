@@ -556,7 +556,7 @@ function initProBanner() {
   const WHATSAPP = "573003468482";
   const msg = encodeURIComponent(
     "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
-    "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
+    "personalizado para mi perfil de cargo en la Procuraduría.  Qué incluye?"
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
