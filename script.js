@@ -551,34 +551,25 @@ function initProBanner() {
   const close  = document.getElementById("proCloseBtn");
   if (!banner || !btn) return;
 
-  const WHATSAPP = "573XXXXXXXXX"; // tu número real
+  const WHATSAPP = "573XXXXXXXXX";
   const msg = encodeURIComponent(
     "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
     "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // Forzar estilos directamente — sin depender de clases CSS
-  banner.style.display = "none";
-
+  // Sin display:none — solo opacity
   setTimeout(() => {
-    banner.style.display     = "flex";
-    banner.style.opacity     = "0";
-    banner.style.transition  = "opacity 0.5s ease";
-    // Pequeño frame para que el navegador registre el display:flex antes de animar
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        banner.style.opacity = "1";
-      });
-    });
+    banner.style.opacity    = "1";
+    banner.style.visibility = "visible";
+    banner.style.zIndex     = "9999";
   }, 3000);
 
   if (close) {
     close.addEventListener("click", () => {
-      banner.style.opacity = "0";
-      setTimeout(() => { banner.style.display = "none"; }, 400);
+      banner.style.opacity    = "0";
+      banner.style.visibility = "hidden";
     });
   }
 }
-
 init();

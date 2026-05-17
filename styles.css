@@ -931,9 +931,10 @@ input:focus-visible {
 }
 
 .pro-banner--hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(-50%) translateY(12px);
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  /* SIN display:none */
 }
 
 .pro-banner__body {
