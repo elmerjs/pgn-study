@@ -560,28 +560,12 @@ function initProBanner() {
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  let shown = false;
-
-  function mostrar() {
-    if (!shown) {
-      shown = true;
-      banner.style.opacity    = "1";
-      banner.style.visibility = "visible";
-    }
-  }
-
-  // Si ya hay scroll al cargar la página
-  if (window.scrollY > 50) {
-    setTimeout(mostrar, 500);
-  }
-
-  // Al hacer scroll
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) mostrar();
-  });
-
-  // Fallback: mostrar a los 5 segundos sin importar nada
-  setTimeout(mostrar, 5000);
+  // Mostrar banner después de 8 segundos siempre
+  // sin depender de scroll ni sessionStorage
+  setTimeout(() => {
+    banner.style.opacity    = "1";
+    banner.style.visibility = "visible";
+  }, 8000);
 
   // Botón cerrar
   if (close) {
