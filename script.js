@@ -551,31 +551,27 @@ function initProBanner() {
   const close  = document.getElementById("proCloseBtn");
   if (!banner || !btn) return;
 
-  const WHATSAPP = "573003468482";
+  const WHATSAPP = "573XXXXXXXXX";
   const msg = encodeURIComponent(
     "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
     "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // Oculto desde JS inmediatamente
-  banner.style.opacity    = "0";
-  banner.style.visibility = "hidden";
-  banner.style.transition = "opacity 0.5s ease, visibility 0.5s ease";
+  // Ocultar ANTES del primer frame
+  banner.style.cssText += '; opacity:0 !important; visibility:hidden !important; transition: opacity 0.5s ease, visibility 0.5s ease;';
 
-  // Aparece a los 45 segundos (pon 3000 para probar)
+  // Mostrar después de 45 segundos
   setTimeout(() => {
     banner.style.opacity    = "1";
     banner.style.visibility = "visible";
-  }, 45000);
+  }, 45000); // cambia a 5000 para probar
 
-  // Botón cerrar
+  // Cerrar con X
   if (close) {
-    close.addEventListener("click", () => {
-      banner.style.opacity    = "0";
-      banner.style.visibility = "hidden";
-      banner.style.pointerEvents = "none";
-    });
+    close.onclick = () => {
+      banner.style.cssText += '; opacity:0 !important; visibility:hidden !important; pointer-events:none !important;';
+    };
   }
 }
 init();
