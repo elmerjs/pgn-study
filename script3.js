@@ -559,14 +559,10 @@ function initProBanner() {
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // Mostrar banner después de 8 segundos siempre
-  // sin depender de scroll ni sessionStorage
-  setTimeout(() => {
-    banner.style.opacity    = "1";
-    banner.style.visibility = "visible";
-  }, 8000);
+  // Mostrar inmediatamente — sin delay
+  banner.style.opacity    = "1";
+  banner.style.visibility = "visible";
 
-  // Botón cerrar
   if (close) {
     close.addEventListener("click", () => {
       banner.style.opacity    = "0";
