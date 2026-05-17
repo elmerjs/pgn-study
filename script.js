@@ -558,16 +558,19 @@ function initProBanner() {
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // Sin display:none — solo opacity
+  // Estado inicial: oculto
+  banner.style.opacity = "0";
+  banner.style.visibility = "hidden";
+  banner.style.transition = "opacity 0.4s ease";
+
   setTimeout(() => {
-    banner.style.opacity    = "1";
+    banner.style.opacity = "1";
     banner.style.visibility = "visible";
-    banner.style.zIndex     = "9999";
   }, 3000);
 
   if (close) {
     close.addEventListener("click", () => {
-      banner.style.opacity    = "0";
+      banner.style.opacity = "0";
       banner.style.visibility = "hidden";
     });
   }
