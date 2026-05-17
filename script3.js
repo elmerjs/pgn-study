@@ -559,9 +559,16 @@ function initProBanner() {
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // Mostrar inmediatamente — sin delay
-  banner.style.opacity    = "1";
-  banner.style.visibility = "visible";
+  banner.style.opacity    = "0";
+  banner.style.visibility = "hidden";
+  banner.style.transition = "opacity 0.5s ease";
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      banner.style.opacity    = "1";
+      banner.style.visibility = "visible";
+    }, 45000); // 45 segundos en producción
+  });
 
   if (close) {
     close.addEventListener("click", () => {
