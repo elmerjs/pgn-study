@@ -556,29 +556,34 @@ function initProBanner() {
   const WHATSAPP = "573003468482";
   const msg = encodeURIComponent(
     "¡Hola! Vi la app PGN Study y quiero saber más sobre el contenido PRO " +
-    "personalizado para mi perfil de cargo en la Procuraduría.  Qué incluye?"
+    "personalizado para mi perfil de cargo en la Procuraduría. ¿Qué incluye?"
   );
   btn.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
 
-  // Mostrar al primer scroll del usuario
   let shown = false;
-  window.addEventListener('scroll', () => {
-    if (!shown && window.scrollY > 100) {
-      shown = true;
-      banner.style.opacity    = "1";
-      banner.style.visibility = "visible";
-    }
-  }, { once: false });
 
-  // También mostrar después de 10 segundos por si no hace scroll
-  setTimeout(() => {
+  function mostrar() {
     if (!shown) {
       shown = true;
       banner.style.opacity    = "1";
       banner.style.visibility = "visible";
     }
-  }, 10000);
+  }
 
+  // Si ya hay scroll al cargar la página
+  if (window.scrollY > 50) {
+    setTimeout(mostrar, 500);
+  }
+
+  // Al hacer scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) mostrar();
+  });
+
+  // Fallback: mostrar a los 5 segundos sin importar nada
+  setTimeout(mostrar, 5000);
+
+  // Botón cerrar
   if (close) {
     close.addEventListener("click", () => {
       banner.style.opacity    = "0";
