@@ -1,5 +1,4 @@
-// pgn-study v2.0 - banner PRO fix
-
+// pgn-study v3.0
 const episodes = [
   {
     id: 1,
@@ -107,7 +106,6 @@ const waveBarsEl = document.getElementById("waveBars");
 
 function init() {
   // 1. Cargamos el banner PRO de inmediato para asegurar su ejecución
-  initProBanner(); 
   
   // 2. Ejecutamos el resto de la app
   renderWaveBars();
@@ -124,6 +122,7 @@ function init() {
   setTimeout(() => {
     updateGlobalProgress();
   }, 100);
+  initProBanner(); 
 }
 
 function filtrarEpisodios() {
