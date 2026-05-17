@@ -563,12 +563,11 @@ function initProBanner() {
   banner.style.visibility = "hidden";
   banner.style.transition = "opacity 0.5s ease";
 
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      banner.style.opacity    = "1";
-      banner.style.visibility = "visible";
-    }, 45000); // 45 segundos en producción
-  });
+  // Sin window.load — directo con setTimeout
+  setTimeout(() => {
+    banner.style.opacity    = "1";
+    banner.style.visibility = "visible";
+  }, 45000);
 
   if (close) {
     close.addEventListener("click", () => {
