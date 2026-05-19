@@ -1,58 +1,46 @@
-const CACHE_NAME = 'pgn-study-v9';
+const CACHE_NAME = 'pgn-study-v8'; // Subimos la versión para forzar refresco
+
 const urlsToCache = [
   '/pgn-study/',
   '/pgn-study/index.html',
   '/pgn-study/styles.css',
   '/pgn-study/script3.js',
-  '/pgn-study/manifest.json'
-  // 🚫 NO incluimos iconos aquí – los cachearemos solo si existen
+  '/pgn-study/manifest.json',
+  '/pgn-study/icon-192.png',
+  '/pgn-study/icon-512.png'
 ];
 
+// 🔥 CORRECCIÓN: Se agregó el evento install que faltaba por completo en tu archivo
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando...');
-  self.skipWaiting();
+  self.skipWaiting(); // Fuerza al Service Worker nuevo a activarse inmediatamente
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      // Intentamos cachear solo los esenciales; si falla alguno, no rompe todo
-      return Promise.allSettled(
-        urlsToCache.map(url => cache.add(url).catch(err => 
-          console.warn(`[SW] No se pudo cachear ${url}:`, err)
-        ))
-      );
+      console.log('Caché abierto: Guardando archivos críticos...');
+      return cache.addAll(urlsToCache);
     })
   );
 });
 
+// Estrategia de Fetch estándar para PWAs
 self.addEventListener('fetch', event => {
-  const request = event.request;
-  // Estrategia: Cache First para recursos estáticos, Network First para audios
-  if (request.url.includes('/audios/')) {
-    event.respondWith(
-      fetch(request).catch(() => caches.match(request))
-    );
-  } else {
-    event.respondWith(
-      caches.match(request).then(response => {
-        if (response) return response;
-        return fetch(request).then(fetchResponse => {
-          // Cacheamos dinámicamente solo si es un recurso estático
-          if (request.method === 'GET' && !request.url.includes('/audios/')) {
-            const clone = fetchResponse.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
-          }
-          return fetchResponse;
-        });
-      }).catch(() => caches.match('/pgn-study/index.html')) // offline fallback
-    );
-  }
+  event.respondWith(
+    caches.match(event.request).then(response => response || fetch(event.request))
+  );
 });
 
+// Activación y limpieza de versiones viejas
 self.addEventListener('activate', event => {
-  console.log('[SW] Activando...');
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.map(key => key !== CACHE_NAME && caches.delete(key))
-    ))
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Eliminando caché antiguo:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
-  self.clients.claim();
+  return self.clients.claim(); // Toma el control de las páginas activas de inmediato
 });
