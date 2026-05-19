@@ -1,55 +1,58 @@
-// Aumentamos versión para obligar al móvil a actualizar
-const CACHE_NAME = 'pgn-study-v7';
-
+const CACHE_NAME = 'pgn-study-v9';
 const urlsToCache = [
   '/pgn-study/',
   '/pgn-study/index.html',
   '/pgn-study/styles.css',
   '/pgn-study/script3.js',
-  '/pgn-study/manifest.json',
-  '/pgn-study/icon-192.png',
-  '/pgn-study/icon-512.png'
+  '/pgn-study/manifest.json'
+  // 🚫 NO incluimos iconos aquí – los cachearemos solo si existen
 ];
 
-// 1. EVENTO INSTALL (Faltaba en tu archivo) - Guarda en caché para funcionar offline
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Obliga al SW a instalarse inmediatamente
+  console.log('[SW] Instalando...');
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Precaching archivos críticos');
-        return cache.addAll(urlsToCache);
-      })
-      .catch(error => console.error('Error en caché:', error))
-  );
-});
-
-// 2. EVENTO FETCH - Responde desde la caché o va a internet
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response; // Devuelve la versión en caché
-        }
-        return fetch(event.request); // Va a la red si no está en caché
-      })
-  );
-});
-
-// 3. EVENTO ACTIVATE - Limpia cachés viejos
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Limpiando caché viejo:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
+    caches.open(CACHE_NAME).then(cache => {
+      // Intentamos cachear solo los esenciales; si falla alguno, no rompe todo
+      return Promise.allSettled(
+        urlsToCache.map(url => cache.add(url).catch(err => 
+          console.warn(`[SW] No se pudo cachear ${url}:`, err)
+        ))
       );
     })
   );
-  return self.clients.claim(); // Toma el control de la página inmediatamente
+});
+
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  // Estrategia: Cache First para recursos estáticos, Network First para audios
+  if (request.url.includes('/audios/')) {
+    event.respondWith(
+      fetch(request).catch(() => caches.match(request))
+    );
+  } else {
+    event.respondWith(
+      caches.match(request).then(response => {
+        if (response) return response;
+        return fetch(request).then(fetchResponse => {
+          // Cacheamos dinámicamente solo si es un recurso estático
+          if (request.method === 'GET' && !request.url.includes('/audios/')) {
+            const clone = fetchResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+          }
+          return fetchResponse;
+        });
+      }).catch(() => caches.match('/pgn-study/index.html')) // offline fallback
+    );
+  }
+});
+
+self.addEventListener('activate', event => {
+  console.log('[SW] Activando...');
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.map(key => key !== CACHE_NAME && caches.delete(key))
+    ))
+  );
+  self.clients.claim();
 });

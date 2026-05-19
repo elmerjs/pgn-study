@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PGN Study">
   <title>PGN Study</title>
 
   <!-- Manifest PWA -->
@@ -165,14 +168,18 @@
 
   <!-- Registrar Service Worker -->
 <script>
-    if ("serviceWorker" in navigator) {
-      // El ?v=7 fuerza al móvil a ver que hay un archivo nuevo
-      navigator.serviceWorker
-        .register("./sw.js?v=7")
-        .then(reg => console.log("Service Worker registrado con alcance:", reg.scope))
-        .catch(err => console.log("Error al registrar SW:", err));
-    }
-  </script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js?v=9')
+        .then(reg => {
+          console.log('✅ SW registrado con alcance:', reg.scope);
+          // Opcional: forzar actualización si hay cambios
+          reg.update();
+        })
+        .catch(err => console.error('❌ Error al registrar SW:', err));
+    });
+  }
+</script>
 <!-- ── BANNER PRO ──────────────────────────────────────── -->
 <div id="proBanner" class="pro-banner" role="complementary" aria-label="Versión PRO">
   <div class="pro-banner__body">

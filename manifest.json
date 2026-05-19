@@ -2,9 +2,10 @@
   "name": "PGN Study - Preparación para el concurso de méritos",
   "short_name": "PGN Study",
   "description": "Tu entrenador personal para aprobar las pruebas con éxito",
-  "start_url": "/pgn-study/",
+  "start_url": "/pgn-study/index.html",
+  "scope": "/pgn-study/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#0b1020",
   "theme_color": "#0066cc",
   "orientation": "portrait",
   "icons": [
@@ -12,13 +13,13 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
