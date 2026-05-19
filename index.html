@@ -166,9 +166,9 @@
   <!-- Registrar Service Worker -->
 <script>
     if ("serviceWorker" in navigator) {
-      // Usamos ruta relativa "./" para que funcione en subcarpetas de GitHub Pages
+      // El ?v=7 fuerza al móvil a ver que hay un archivo nuevo
       navigator.serviceWorker
-        .register("./sw.js")
+        .register("./sw.js?v=7")
         .then(reg => console.log("Service Worker registrado con alcance:", reg.scope))
         .catch(err => console.log("Error al registrar SW:", err));
     }
